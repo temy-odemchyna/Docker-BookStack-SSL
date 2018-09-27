@@ -1,7 +1,7 @@
 FROM php:7.1.10-apache
 
 ENV BOOKSTACK=BookStack \
-    BOOKSTACK_VERSION=0.21.0 \
+    BOOKSTACK_VERSION=0.23.2 \
     BOOKSTACK_HOME="/var/www/bookstack"
 
 RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev wget libldap2-dev libtidy-dev \
@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y git zlib1g-dev libfreetype6-dev libjpeg
 
 COPY php.ini /usr/local/etc/php/php.ini
 COPY bookstack.conf /etc/apache2/sites-enabled/bookstack.conf
-COPY bookstack.conf /etc/apache2/sites-enabled/bookstack.ssl.conf
+COPY bookstack.ssl.conf /etc/apache2/sites-enabled/bookstack.ssl.conf
 
 RUN a2enmod rewrite
 RUN a2enmod ssl
