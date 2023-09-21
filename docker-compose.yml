@@ -6,10 +6,10 @@ services:
     container_name: bookstack_db
     hostname: bookstack.temy.co
     environment:
-    - MYSQL_ROOT_PASSWORD=mlecko12
+    - MYSQL_ROOT_PASSWORD=secret
     - MYSQL_DATABASE=bookstack
     - MYSQL_USER=bookstack
-    - MYSQL_PASSWORD=prorab12
+    - MYSQL_PASSWORD=secret
     volumes:
     - mysql-data:/var/lib/mysql
     networks:
@@ -24,7 +24,7 @@ services:
     - DB_HOST=bookstack_db:3306
     - DB_DATABASE=bookstack
     - DB_USERNAME=bookstack
-    - DB_PASSWORD=prorab12
+    - DB_PASSWORD=secret
     - APP_URL=https://bookstack.temy.co
     - APP_KEY=ABCDEF123ERD456EABCDEF123ERD456E 
     volumes:
