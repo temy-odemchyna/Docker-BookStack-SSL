@@ -1,38 +1,50 @@
 version: '2'
 services:
 
-  mysql:
-    image: mysql:5.7.20
+  bookstack_db:
+    image: mysql:5.7.21
+    container_name: bookstack_db
+    hostname: bookstack.temy.co
     environment:
-    - MYSQL_ROOT_PASSWORD=secret
+    - MYSQL_ROOT_PASSWORD=mlecko12
     - MYSQL_DATABASE=bookstack
     - MYSQL_USER=bookstack
-    - MYSQL_PASSWORD=secret
+    - MYSQL_PASSWORD=prorab12
     volumes:
     - mysql-data:/var/lib/mysql
+    networks:
+    - bookstack_nw
 
   bookstack:
-    image: cupric/edgepower-bookstack
+    image: solidnerd/bookstack:23.8.3
+    container_name: bookstack
     depends_on:
-    - mysql
+    - bookstack_db
     environment:
-    - DB_HOST=mysql:3306
+    - DB_HOST=bookstack_db:3306
     - DB_DATABASE=bookstack
     - DB_USERNAME=bookstack
-    - DB_PASSWORD=secret
-    - GOOGLE_APP_ID=611333768376-d6m55iik4nn47nfcpc4l1qelu5roqblb.apps.googleusercontent.com
-    - GOOGLE_APP_SECRET=_cwxA-kbxEC7cBaGkfHWDTE2
-    - APP_URL=https://kb.edgepower.com
+    - DB_PASSWORD=prorab12
+    - APP_URL=https://bookstack.temy.co
+    - APP_KEY=ABCDEF123ERD456EABCDEF123ERD456E 
     volumes:
     - uploads:/var/www/bookstack/public/uploads
     - storage-uploads:/var/www/bookstack/public/storage
-    - /etc/letsencrypt/live/kb.edgepower.com:/etc/letsencrypt/live/kb.edgepower.com
-    - /etc/letsencrypt/archive/kb.edgepower.com:/etc/letsencrypt/archive/kb.edgepower.com
+    - /etc/letsencrypt/live/bookstack.temy.co:/etc/letsencrypt/live/bookstack.temy.co
+    - /etc/letsencrypt/archive/bookstack.temy.co:/etc/letsencrypt/archive/bookstack.temy.co
+    - /etc/apache2/sites-enabled:/etc/apache2/sites-enabled
+    networks:
+    - bookstack_nw
     ports:
-    - "80:80"
+    - "80:8080"
     - "443:443"
 
 volumes:
  mysql-data:
  uploads:
  storage-uploads:
+ 
+networks:
+  bookstack_nw:
+    name: bookstack_nw
+    external: true
